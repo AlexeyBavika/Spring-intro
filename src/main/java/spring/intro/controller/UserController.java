@@ -3,6 +3,7 @@ package spring.intro.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/inject")
+    @GetMapping("/inject")
     public void injectUsers() {
         userService.add(new User("Alexey"));
         userService.add(new User("Vadim"));
@@ -24,12 +25,12 @@ public class UserController {
         userService.add(new User("Alina"));
     }
 
-    @RequestMapping("/get/{id}")
+    @GetMapping("/{id}")
     public UserResponseDto get(@PathVariable Long id) {
         return getDtoFromUser(userService.get(id));
     }
 
-    @RequestMapping
+    @GetMapping
     public List<UserResponseDto> getAll() {
         return userService.listUsers().stream()
                 .map(this::getDtoFromUser)
